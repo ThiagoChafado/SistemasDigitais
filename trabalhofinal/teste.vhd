@@ -23,7 +23,7 @@ architecture Behavioral of BatalhaNaval is
     
 begin
 
-    -- Processo para a máquina de estados
+  
     process (clk, reset)
     begin
         if reset = '1' then
@@ -33,7 +33,7 @@ begin
         end if;
     end process;
 
-    -- Lógica para transição de estados
+    
     process (current_state, navio1_foi_colocado, navio2_foi_colocado, navio3_foi_colocado, tiro_pos_reg)
     begin
         next_state <= current_state;
@@ -41,7 +41,6 @@ begin
         navio2_foi_colocado <= '0';
         navio3_foi_colocado <= '0';
         
-        -- Inicializa tiro_acerto_next como '0'
         tiro_acerto_reg <= '0';
 
         case current_state is
@@ -66,11 +65,11 @@ begin
             when Tiros =>
                 if tiro_pos_reg /= "0000" then
                     if tiro_pos_reg = navio1_pos then
-                        tiro_acerto_reg <= '1'; -- Define tiro_acerto_reg como '1' se houver acerto
+                        tiro_acerto_reg <= '1'; 
                     elsif tiro_pos_reg = navio2_pos then
-                        tiro_acerto_reg <= '1'; -- Define tiro_acerto_reg como '1' se houver acerto
+                        tiro_acerto_reg <= '1'; 
                     elsif tiro_pos_reg = navio3_pos then
-                        tiro_acerto_reg <= '1'; -- Define tiro_acerto_reg como '1' se houver acerto
+                        tiro_acerto_reg <= '1'; 
                     end if;
                 end if;
 
@@ -84,9 +83,8 @@ begin
             tabuleiro <= (others => '0');
             tiro_pos_next <= (others => '0');
         elsif rising_edge(clk) then
-            tabuleiro <= tabuleiro; -- Mantém o valor atual do tabuleiro
-            tiro_pos_reg <= tiro_pos_next; -- Atualiza tiro_pos_reg com o novo valor de tiro_pos
-
+            tabuleiro <= tabuleiro; 
+            tiro_pos_reg <= tiro_pos_next; 
             case current_state is
                 when N1 =>
                     if navio1_foi_colocado = '1' then
@@ -104,14 +102,14 @@ begin
                     end if;
 
                 when Tiros =>
-                    -- Atualizar tiro_pos_next com o novo valor de tiro_pos
+                    
                     tiro_pos_next <= tiro_pos;
 
             end case;
         end if;
     end process;
 
-    -- Saída do sinalizador de acerto
+    
     tiro_acerto <= tiro_acerto_reg;
 
 end Behavioral;
