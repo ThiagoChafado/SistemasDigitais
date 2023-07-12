@@ -34,6 +34,7 @@ begin
     begin
         if reset = '1' then
             current_state <= N1;
+            tiro_acerto_reg <= '0';
         elsif rising_edge(clk) then
             current_state <= next_state;
         end if;
@@ -83,45 +84,43 @@ begin
     end process;
 
     -- Processo para codificar o valor de tiro_pos
-    process (tiro_pos)
-    begin
-        case tiro_pos is
-            when "0000" =>
+    function codificacao (pos : std_logic_vector(3 downto 0)) return std_logic_vector is
+        begin
+            if "0000" =>
                 tiro_pos_encoded <= "0001";
-            when "0001" =>
+            if "0001" =>
                 tiro_pos_encoded <= "0000";
-            when "0010" =>
+            if "0010" =>
                 tiro_pos_encoded <= "1111";
-            when "0011" =>
+            if "0011" =>
                 tiro_pos_encoded <= "1110";
-            when "0100" =>
+            if "0100" =>
                 tiro_pos_encoded <= "1010";
-            when "0101" =>
+            if "0101" =>
                 tiro_pos_encoded <= "0111";
-            when "0110" =>
+            if "0110" =>
                 tiro_pos_encoded <= "0100";
-            when "0111" =>
+            if "0111" =>
                 tiro_pos_encoded <= "1000";
-            when "1000" =>
+            if "1000" =>
                 tiro_pos_encoded <= "0110";
-            when "1001" =>
+            if "1001" =>
                 tiro_pos_encoded <= "0111";
-            when "1010" =>
+            if "1010" =>
                 tiro_pos_encoded <= "0010";
-            when "1011" =>
+            if "1011" =>
                 tiro_pos_encoded <= "1011";
-            when "1100" =>
+            if "1100" =>
                 tiro_pos_encoded <= "0001";
-            when "1101" =>
+            if "1101" =>
                 tiro_pos_encoded <= "1101";
-            when "1110" =>
+            if "1110" =>
                 tiro_pos_encoded <= "1001";
-            when "1111" =>
+            if "1111" =>
                 tiro_pos_encoded <= "0011";
-            when others =>
-                tiro_pos_encoded <= "0000";
-        end case;
-    end process;
+            --if others =>
+                --tiro_pos_encoded <= "0000";
+        end function;
 
     -- Processo para atualizar o tabuleiro
     process (clk, reset, current_state, navio1_foi_colocado, navio2_foi_colocado, navio3_foi_colocado, tiro_pos_reg)
@@ -145,13 +144,14 @@ begin
 
                 when N3 =>
                     if navio3_foi_colocado = '1' then
-                        auxn3<= navio3_pos;
+                        
+                        --auxn3 <= navio3_pos;
                         --tabuleiro(to_integer(unsigned(navio3_pos(7 downto 4)))) <= '1';
                     end if;
 
                 when Tiros =>
                     
-                    tiro_pos_next <= tiro_pos_encoded;
+                    tiro_pos_encoded <= codificacao(tiro_pos);
 
             end case;
         end if;
@@ -161,3 +161,4 @@ begin
     tiro_acerto <= tiro_acerto_reg;
 
 end Behavioral;
+                
