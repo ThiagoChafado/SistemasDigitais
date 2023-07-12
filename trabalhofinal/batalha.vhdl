@@ -3,8 +3,7 @@ use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.NUMERIC_STD.ALL;
 
 entity BatalhaNaval is
-    Port ( clk : in  STD_LOGIC;
-           reset : in  STD_LOGIC;
+    Port ( key : in  STD_LOGIC; --clock
            navio1_pos : in  STD_LOGIC_VECTOR (3 downto 0);
            navio2_pos : in  STD_LOGIC_VECTOR (3 downto 0);
            navio3_pos : in  STD_LOGIC_VECTOR (7 downto 0);
@@ -84,35 +83,35 @@ begin
             when "0000" =>
                 tiro_pos_encoded <= "0001";
             when "0001" =>
-                tiro_pos_encoded <= "1100";
-            when "0010" =>
-                tiro_pos_encoded <= "1010";
-            when "0011" =>
-                tiro_pos_encoded <= "1111";
-            when "0100" =>
-                tiro_pos_encoded <= "0110";
-            when "0101" =>
                 tiro_pos_encoded <= "0000";
-            when "0110" =>
-                tiro_pos_encoded <= "1001";
-            when "0111" =>
-                tiro_pos_encoded <= "0101";
-            when "1000" =>
-                tiro_pos_encoded <= "0111";
-            when "1001" =>
+            when "0010" =>
+                tiro_pos_encoded <= "1111";
+            when "0011" =>
                 tiro_pos_encoded <= "1110";
-            when "1010" =>
+            when "0100" =>
+                tiro_pos_encoded <= "1010";
+            when "0101" =>
+                tiro_pos_encoded <= "0111";
+            when "0110" =>
                 tiro_pos_encoded <= "0100";
+            when "0111" =>
+                tiro_pos_encoded <= "1000";
+            when "1000" =>
+                tiro_pos_encoded <= "0110";
+            when "1001" =>
+                tiro_pos_encoded <= "0111";
+            when "1010" =>
+                tiro_pos_encoded <= "0010";
             when "1011" =>
                 tiro_pos_encoded <= "1011";
             when "1100" =>
-                tiro_pos_encoded <= "1000";
+                tiro_pos_encoded <= "0001";
             when "1101" =>
                 tiro_pos_encoded <= "1101";
             when "1110" =>
-                tiro_pos_encoded <= "0011";
+                tiro_pos_encoded <= "1001";
             when "1111" =>
-                tiro_pos_encoded <= "0010";
+                tiro_pos_encoded <= "0011";
             when others =>
                 tiro_pos_encoded <= "0000";
         end case;
