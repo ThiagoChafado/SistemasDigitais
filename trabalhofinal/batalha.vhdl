@@ -22,6 +22,10 @@ architecture Behavioral of BatalhaNaval is
     signal tiro_pos_reg, tiro_pos_next : STD_LOGIC_VECTOR (3 downto 0);
     signal tiro_acerto_reg : STD_LOGIC := '0';
     signal tiro_pos_encoded : STD_LOGIC_VECTOR (3 downto 0);
+    signal auxn1 : STD_LOGIC_VECTOR (3 downto 0);
+    signal auxn2 : STD_LOGIC_VECTOR (3 downto 0);
+    signal auxn3 : STD_LOGIC_VECTOR (3 downto 0);
+
 
 begin
 
@@ -66,11 +70,11 @@ begin
 
             when Tiros =>
                 if tiro_pos_encoded /= "0000" then
-                    if tiro_pos_encoded = navio1_pos then
+                    if tiro_pos_encoded = auxn1 then
                         tiro_acerto_reg <= '1';
-                    elsif tiro_pos_encoded = navio2_pos then
+                    elsif tiro_pos_encoded = auxn2 then
                         tiro_acerto_reg <= '1';
-                    elsif tiro_pos_encoded = navio3_pos(3 downto 0) or tiro_pos_encoded = navio3_pos(7 downto 4) then
+                    elsif tiro_pos_encoded = auxn3 then
                         tiro_acerto_reg <= '1';
                     end if;
                 end if;
@@ -131,18 +135,18 @@ begin
             case current_state is
                 when N1 =>
                     if navio1_foi_colocado = '1' then
-                        tabuleiro(to_integer(unsigned(navio1_pos))) <= '1';
+                        auxn1 <= navio1_pos;
                     end if;
 
                 when N2 =>
                     if navio2_foi_colocado = '1' then
-                        tabuleiro(to_integer(unsigned(navio2_pos))) <= '1';
+                        auxn2 <= navio2_pos;
                     end if;
 
                 when N3 =>
                     if navio3_foi_colocado = '1' then
-                        tabuleiro(to_integer(unsigned(navio3_pos(3 downto 0)))) <= '1';
-                        tabuleiro(to_integer(unsigned(navio3_pos(7 downto 4)))) <= '1';
+                        auxn3<= navio3_pos;
+                        --tabuleiro(to_integer(unsigned(navio3_pos(7 downto 4)))) <= '1';
                     end if;
 
                 when Tiros =>
