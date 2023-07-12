@@ -3,7 +3,9 @@ use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.NUMERIC_STD.ALL;
 
 entity BatalhaNaval is
-    Port ( key : in  STD_LOGIC; --clock
+    Port ( clk : in  STD_LOGIC;
+            
+            reset : in  STD_LOGIC;
            navio1_pos : in  STD_LOGIC_VECTOR (3 downto 0);
            navio2_pos : in  STD_LOGIC_VECTOR (3 downto 0);
            navio3_pos : in  STD_LOGIC_VECTOR (7 downto 0);
